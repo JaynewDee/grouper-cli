@@ -1,6 +1,5 @@
 use std::env::{args, Args};
 
-pub fn parse_args() -> Args {
-    let args = args();
-    return args;
+pub fn parse_args() -> Result<Args, ()> {
+    Ok(args())
 }
