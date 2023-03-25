@@ -1,5 +1,5 @@
 use csv::ReaderBuilder;
-use std::{error::Error, io, process};
+use std::error::Error;
 
 mod command;
 
@@ -11,8 +11,8 @@ struct Input {
 }
 
 #[derive(Debug, serde::Deserialize)]
-#[serde(rename_all = "PascalCase")]
 struct StudentRecord {
+    #[serde(rename = "Student")]
     student: String,
     #[serde(rename = "Current Score")]
     current_score: String,
@@ -29,8 +29,6 @@ fn read_csv(path: &str) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-// fn file_exists(path: String) {}
-
 fn main() {
     let args: Vec<String> = command::parse_args().unwrap().collect();
     let relative_path: String = args[1].to_owned();
@@ -43,5 +41,6 @@ fn main() {
         relative_path,
         group_size,
     };
-    read_csv(&inputs.relative_path);
+
+    read_csv(&inputs.relative_path).expect("CSV should have been parsed!");
 }
